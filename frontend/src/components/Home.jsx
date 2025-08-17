@@ -29,13 +29,13 @@ const Home = () => {
   return (
     <div style={{display:"flex", flexWrap:"wrap",gap:"50px",marginLeft:"30px"}}>
      {products.map(product=>(
-      <Card sx={{ maxWidth: 350 }} style={{marginTop:"50px"}} >
+      <Card sx={{ maxWidth: 310}} style={{marginTop:"20px",backgroundColor:'rgb(255,255,0,0.2)'}} >
       <CardMedia
         component="img"
         sx={{ height: 250 }}
         image={product.image}
         title={product.title}
-        style={{objectFit:'contain'}}
+        style={{objectFit:'contain',marginTop:"20px"}}
       />
       <CardContent>
         <Typography gutterBottom variant="h6" component="div">
@@ -44,10 +44,11 @@ const Home = () => {
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {product.description}
         </Typography><br />
+      
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           Status: <strong>{product.status}</strong>
         </Typography>
-      </CardContent>
+            </CardContent>
       <CardActions>
         <Button size="small">View</Button>
         <Button size="small">Add to cart</Button>

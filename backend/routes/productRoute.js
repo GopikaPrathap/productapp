@@ -18,7 +18,7 @@ router.post('/add',async (req,res)=>{
     try{
       const product= new model(req.body)
       await product.save()
-      res.status(200).send("product added successfully")
+      res.status(200).send({message:"Succesfully added the product!"})
     }catch(er){
          res.status(400).send({message:"Can't get product details"})
     }

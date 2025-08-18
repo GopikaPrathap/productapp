@@ -6,6 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     // const products=[
@@ -26,10 +27,31 @@ const Home = () => {
             })
     },[])
 
+
+
+//function for deletion
+let deleteProduct=(id)=>{
+  axios.delete('http://localhost:8000/product/delete/'+id)
+        .then((res)=>{
+          window.location.reload()
+        })
+        .catch((er)=>{
+            console.error(er)
+        })
+}
+
+//function for updation
+let navigate=useNavigate()
+let editBlog=(product)=>{
+   navigate('/addproduct',{state:{product}})
+}
+
+
+
   return (
     <div style={{display:"flex", flexWrap:"wrap",gap:"50px",marginLeft:"30px"}}>
      {products.map(product=>(
-      <Card sx={{ maxWidth: 310}} style={{marginTop:"20px",backgroundColor:'rgb(255,255,0,0.2)'}} >
+      <Card sx={{ maxWidth: 310,marginTop: 5,display: 'flex',flexDirection: 'column', minHeight: 400}}>
       <CardMedia
         component="img"
         sx={{ height: 250 }}
@@ -37,7 +59,7 @@ const Home = () => {
         title={product.title}
         style={{objectFit:'contain',marginTop:"20px"}}
       />
-      <CardContent>
+      <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h6" component="div">
           {product.title}
         </Typography>
@@ -51,7 +73,8 @@ const Home = () => {
             </CardContent>
       <CardActions>
         <Button size="small">View</Button>
-        <Button size="small">Add to cart</Button>
+        <Button size="small" onClick={()=>editBlog(product)}>Edit</Button>
+        <Button size="small" onClick={()=>deleteProduct(product._id)}>Delete</Button>
       </CardActions>
     </Card>
     ))}

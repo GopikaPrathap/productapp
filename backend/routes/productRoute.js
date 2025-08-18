@@ -41,7 +41,7 @@ router.put('/update/:id',async (req,res)=>{
 router.delete('/delete/:id',async (req,res)=>{
     try{
       await model.findByIdAndDelete(req.params.id)
-      res.status(200).send("product deleted successfully")
+      res.status(200).send({message:"product deleted successfully"})
     }catch(er){
          res.status(400).send({message:"Error in deletion"})
     }

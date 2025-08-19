@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import axiosInstance from '../axiosinterceptor'
 
 const AddProduct = () => {
   const [form,setForm]=useState({
@@ -29,7 +30,7 @@ let location=useLocation()
   
   function submitValue(e){
     if(location.state!=null){
-      axios.put('http://localhost:8000/product/update/'+location.state.product._id,form)
+      axiosInstance.put('http://localhost:8000/product/update/'+location.state.product._id,form)
       .then((res)=>{
         alert("Product details Updated")
         navigate('/')
@@ -39,7 +40,7 @@ let location=useLocation()
       })
     }else{
       e.preventDefault()
-    axios.post('http://localhost:8000/product/add',form)
+    axiosInstance.post('http://localhost:8000/product/add',form)
     .then((res)=>{
       console.log("new product added",form)
       alert(res.data.message)

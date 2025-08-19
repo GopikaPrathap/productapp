@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../axiosinterceptor';
 
 const Home = () => {
     // const products=[
@@ -31,7 +32,7 @@ const Home = () => {
 
 //function for deletion
 let deleteProduct=(id)=>{
-  axios.delete('http://localhost:8000/product/delete/'+id)
+  axiosInstance.delete('http://localhost:8000/product/delete/'+id)
         .then((res)=>{
           window.location.reload()
         })

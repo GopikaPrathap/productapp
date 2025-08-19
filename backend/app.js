@@ -3,6 +3,8 @@ const app=express()
 require('dotenv').config()
 const PORT=process.env.PORT
 const cors=require('cors')
+const jwt=require('jsonwebtoken')
+
 
 const productModel=require('./models/productModel')
 const userModel=require('./models/userModel')

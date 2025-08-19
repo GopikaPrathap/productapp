@@ -1,10 +1,25 @@
 const express=require('express')
 const router=express.Router()
 const model=require('../models/productModel')
+const jwt=require('jsonwebtoken')
 
 router.use(express.json())
 router.use(express.urlencoded({extended:true}))
 
+//Adding middleware
+function verifyToken(req,res,next){
+    let token=req.headers.token
+    try{
+        if(!token) throw "Unauthorised Access"
+        let payload=jwt.verify(token,"secret")
+        if(!payload) throw "Unauthorised Access"
+        next()
+    }catch(er){
+       res.json({message:error})
+    }
+}
+
+//API methods
 router.get('/',async (req,res)=>{
     try{
         const products= await model.find()
@@ -14,7 +29,7 @@ router.get('/',async (req,res)=>{
     }
 })
 
-router.post('/add',async (req,res)=>{
+router.post('/add',verifyToken,async (req,res)=>{
     try{
       const product= new model(req.body)
       await product.save()
@@ -24,7 +39,7 @@ router.post('/add',async (req,res)=>{
     }
 })
 
-router.put('/update/:id',async (req,res)=>{
+router.put('/update/:id',verifyToken,async (req,res)=>{
     try{
         const id=req.params.id
         const product= await model.findByIdAndUpdate(
@@ -38,7 +53,7 @@ router.put('/update/:id',async (req,res)=>{
     }
 })
 
-router.delete('/delete/:id',async (req,res)=>{
+router.delete('/delete/:id',verifyToken,async (req,res)=>{
     try{
       await model.findByIdAndDelete(req.params.id)
       res.status(200).send({message:"product deleted successfully"})

@@ -17,7 +17,8 @@ const Login = () => {
     .then((res)=>{
       console.log("form submitted...",form)
       alert(res.data.message)
-      if(res.data.message==='Login Successful'){
+      if(res.data.usertoken){
+        localStorage.setItem("token",res.data.usertoken)
           navigate('/')
       }
       
